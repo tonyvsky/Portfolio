@@ -1,0 +1,176 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* universal, regra pra tudo do css*/
+
+/*criando o root que é o padrao, q vai ficar com o tema escuro*/
+:root {
+    --text-color: white;
+    --bg-url: url(./assets/bg-mobile.jpg);
+    --stroke-color: rgba(255, 255, 255, 0.5);
+    --surface-color: rgba(255, 255, 255, 0.1);
+    --surface-color-hover: rgba(255, 255, 255, 0.5);
+    --highlight-color: rgba(255, 255, 255, 0.2);
+    --switch-bg-url: url(./assets/moon-stars.svg);
+}
+
+/*e esse é para o tema claro*/
+.light {
+    --text-color: black;
+    --bg-url: url(./assets/bg-mobilelight.jpg); /*img do background na pasta assents*/
+    --stroke-color: rgba(0, 0, 0, 0.5); /*borda*/
+    --surface-color: rgba(0, 0, 0, 0.05); /*cor do fundo do botao*/
+    --surface-color-hover: rgba(0, 0, 0, 0.02); /*mudar a cor do botao com o mouse em cima*/
+    --highlight-color: rgba(0, 0, 0, 0.1); /*mesma coisa, mas pro botao de rede social*/
+    --switch-bg-url: url(./assets/sun.svg); /*troca a imagem da lua do botao pro sol*/
+}
+
+body {
+
+    /*
+    background-image: url(./assets/bg-mobile.jpg);
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+    */
+    /*backgorund: color image repeat position/size (percisa por a barra)
+    Significa que eu transformei tudo ali de cima em uma unica propriedade, em um unica linha, tambem chamado de atalho. */
+    
+    background: var(--bg-url) no-repeat top center/cover;
+}
+
+body * {
+    font-family: 'Inter', sans-serif;
+    color:var(--text-color)
+
+} /*body * é universal, quer dizer que ele vai aplicar isso para todos os elementos dentro do body.*/
+
+#container {
+    width: 360px;
+    margin: 56px auto 0px;
+    padding: 0 24px;
+}
+/*o margin ou o padding(preenchimento) pode colocar o auto para manter o padrao pra todos, ou ir preenchendo dessa maneira: margin 56px auto 0px auto. Dessa maneira é sentido horario, cima, direita, baixo e esquerda. Posso colocar menos informação, mas ai o segundo vai corresponder para direita e esquerda: margin: 56px auto 0px.*/
+
+#profile {
+    text-align: center;
+    padding: 24px;
+}
+
+#profile img {
+    width: 112px;
+}
+/* existem regras para elementos em block e elementos in line, no caso o container é block
+a imagem é in line. No block a "margin: auto" funciona, já em in line, não. Por isso é preciso
+usar o display: block pra converter um in line em block e o margin funcionar por exemplo.
+também é possivel abrir um "pai" que tudo que tiver no #profile ele aplica a regra:
+#profile {
+    text-align: center
+}
+Dessa maneira nao preciso usar o display:block no #profile img*/
+
+#profile p {
+    font-weight: 500;
+    line-height: 24px;
+    margin-top: 8px;
+}
+
+#switch {
+    position: relative; /*pra limitar o absolute do button pra ficar apenas dentro da area do switch*/
+    width: 64px; /* deixar no mesmo tamanho do span, pra ele limitar o espaço, fica mais facil assim.*/
+
+    margin: 4px auto; /*posicionar no centro o switch*/
+}
+
+/*switch para fazer o botao de dia enoite*/
+#switch button {
+    width: 32px;
+    height: 32px;
+    background: white var(--switch-bg-url) no-repeat center; /*no repeat pra a imagem nao ficar repetindo, ter só uma*/
+    border: 0;
+    border-radius: 50%;
+
+    position: absolute; /*ele cria uma sobreposiçao de camadas*/
+    top: 50%; /*retoma o -50% tirado no transform pra centralizar*/
+    left: 0;
+    z-index: 1; /*colocar o botao 1 camada acima do span, no 0 eles disputam espaço ficando borrado*/
+    transform: translateY(-50%); /*usa o y pra cima e baixo, x pra direita e esquerda*/
+}
+
+.light #switch button {
+    right: 0;
+    left: initial;
+}
+
+#switch span {
+    display: block;
+    width: 64px;
+    height: 24px;
+    background: var(--surface-color);
+    border: 1px solid var(--stroke-color);
+    backdrop-filter: blur(4px);
+    --webkit-backdrop-filter: blur(4px);
+    border-radius: 9999px;
+}
+
+/* links */
+ul {
+    list-style: none; /*pra tirar os pontinhos na frente das frases, feitas por conta do ul. se fosse ol seria numeros.*/
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /*para criar o espaço entre os botões, mas preciso do display flex no ul e o flex direction para dar certo o gap.*/
+
+    padding: 24px 0; /*para criar o espaçamento do botoes para o social links*/
+}
+
+ul li a{
+    /*border: 1px solid red; coloco esse border só para ver como está ficando o botao, nao precisa ter */
+    display: flex;
+    align-items: center; /*alinha os itens dentro do bloco, no caso alinha ao centro.*/
+    justify-content: center; /*centraliza os elementos*/
+    padding: 16px 24px; /*tamanho do bloco*/
+    background: var(--surface-color); /*o fundo dos botoes*/
+    border: 1px solid var(--stroke-color); /*a cor da borda do botão*/
+    border-radius: 8px; /*para por curva na borda.*/
+    backdrop-filter: blur(4px); /*um efeito de blur no botão, mais um visual, quase nao da pra ver.*/
+    -webkit-backdrop-filter: blur(4px); /*precisei colocar esse -webkit- pq o backdrop nao funciona direito no navegador safari. Visto usando o caniuse.com*/
+    text-decoration: none; /*para tirar a linha de baixo do link*/
+    font-weight: 500; /*peso da fonte. Sendo o 400 a linha normal e 500 o bold (negrito) ou vc pode escrever bold tbm*/
+    transition: background 0.4s; /*efeito de transiçao do background com delay de 0.5s, posso mudar o background para qualquer coisa, inclusive all.*/
+}
+
+/* pseudo-selector quando passa o mouse em cima do ul li a*/
+ul li a:hover {
+    background: var(--surface-color-hover); 
+    border: 1.5px solid var(--text-color)
+}
+
+/*social links*/
+#social-links {
+    display: flex;
+    justify-content: center;
+    padding: 24px 0;
+    font-size: 24px;
+}
+
+#social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+
+    transition: background 0.4s;
+    border-radius: 50%;
+}
+
+#social-links a:hover {
+    background: var(--highlight-color)
+}
+
+footer {
+    padding: 24px 0;
+    text-align: center;
+    font-size: 14px;
+}
